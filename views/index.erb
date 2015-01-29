@@ -1,0 +1,20 @@
+<h1>Recipe Box</h1>
+
+<p>Enter your recipe name:</p>
+
+<form action="/" method="post" class="form-entry">
+  <input type="text" name="recipe_name" placeholder="Recipe name">
+  <button type="submit">Add name</button>
+</form>
+
+<ul class="list-unstyled">
+  <% if @recipes.any? %>
+    <% @recipes.each do |recipe| %>
+    <li>
+      <%= recipe.recipe_name %>
+    </li>
+    <% end %>
+    <% else %>
+    <p>You don't have any recipes</p>
+  <% end %>
+</ul>
