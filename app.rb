@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'pry'
 Bundler.require :default
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 also_reload 'lib/**/*.rb'
@@ -10,7 +11,45 @@ end
 
 post '/' do
   recipe_name = params["recipe_name"]
-  @recipe = Recipe.create({ recipe_name: params.fetch('recipe_name') })
-  @recipes = Recipe.all
-  erb :index
+  recipe = Recipe.create({:recipe_name => recipe_name})
+  redirect '/'
 end
+
+get '/recipes/:id' do
+  @ingredients = Ingredient.all
+  @recipe = Recipe.find(params["id"].to_i)
+  ingredients = Ingredient.find(params["id"])
+  erb :recipe
+end
+
+post '/recipes' do
+  recipe = Recipe.find(params["id"].to_i)
+  recipe_id = recipe.id()
+  new_ingredient = params["ingredient_name"]
+  ingredient = Ingredient.create({ ingredient_name: new_ingredient})
+  redirect '/recipes/#{recipe_id}'
+end
+
+
+# post '/' do
+#   recipe_name = params["recipe_name"]
+#   recipe = Recipe.create({:recipe_name => recipe_name})
+#   redirect '/'
+# end
+#
+# get '/recipe/:id' do
+#   # @ingredients = Ingredient.all
+#   @recipe = Recipe.find(params["id"].to_i)
+#   @ingredients = @recipe.ingredients
+#   erb :recipe
+# end
+#
+# post '/recipe/:id' do
+#   recipe = Recipe.find(params.fetch("id").to_i)
+#
+#   @ingredients = params["ingredient_name"]
+#   new_ingredient = Ingredient.create({:ingredient_name => @ingredients})
+#   recipe.ingredients << new_ingredient
+#
+#   redirect '/recipe/:id'
+# end
