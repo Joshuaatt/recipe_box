@@ -16,18 +16,18 @@ post '/' do
 end
 
 get '/recipes/:id' do
-  @ingredients = Ingredient.all
   @recipe = Recipe.find(params["id"].to_i)
-  ingredients = Ingredient.find(params["id"])
+  @ingredients = @recipe.ingredients
   erb :recipe
 end
 
-post '/recipes' do
+post '/recipes/:id' do
   recipe = Recipe.find(params["id"].to_i)
   recipe_id = recipe.id()
   new_ingredient = params["ingredient_name"]
   ingredient = Ingredient.create({ ingredient_name: new_ingredient})
-  redirect '/recipes/#{recipe_id}'
+  recipe.update({ :ingredient_ids => [ingredient.id()] })
+  redirect "/recipes/#{recipe_id}"
 end
 
 

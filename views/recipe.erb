@@ -1,0 +1,23 @@
+<h1>Your Recipe</h1>
+
+<h2><%= @recipe.recipe_name %></h2>
+
+<p>Enter an ingredient and add it to the recipe.</p>
+
+<form action="/recipes/<%= @recipe.id %>" method="post">
+
+  <input type="text" name="ingredient_name" placeholder="Ingredient name">
+  <button type="submit">Add ingredient</button>
+</form>
+
+<ul class="list-unstyled">
+<% if @ingredients.any? %>
+  <% @ingredients.each do |ingredient| %>
+    <li>
+      <%= ingredient.ingredient_name %>
+    </li>
+  <% end %>
+    <% else %>
+    <p>No ingredients</p>
+<% end %>
+</ul>

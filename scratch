@@ -1,0 +1,11 @@
+<ul class="list-unstyled">
+<% if @ingredients.any? %>
+  <% @ingredients.each do |ingredient| %>
+    <li>
+      <%= ingredient.ingredient_name %>
+    </li>
+  <% end %>
+    <% else %>
+    <p>No ingredients</p>
+<% end %>
+</ul>
